@@ -1,0 +1,118 @@
+@import "format";
+@import "function";
+@import "theme";
+
+// 文本对齐方式
+.ta(...) {
+  text-align: @arguments;
+}
+// 居中
+.tac {
+  .ta(center);
+}
+// 居右
+.tar {
+  .ta(right);
+}
+// 居左
+.tal {
+  .ta(left)
+}
+
+.txt-nowrap {
+  white-space:nowrap;
+}
+.txt-ellipsis {
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.txt-ellipsis-2{
+  .ellipsis-2();
+}
+
+.callee(@counter, @max, @depth, @key, @prototype) when(@counter <= @max) {
+  .@{key}@{counter} {
+    .px2rem(@prototype, @counter)!important;
+  }
+  .callee(@counter + @depth, @max, @depth, @key, @prototype);
+}
+// margin边距
+.callee(0, 60, 2, m, margin);
+.callee(0, 60, 2, ml, margin-left);
+.callee(0, 60, 2, mt, margin-top);
+.callee(0, 60, 2, mr, margin-right);
+.callee(0, 60, 2, mb, margin-bottom);
+// padding边距
+.callee(0, 60, 2, p, padding);
+.callee(0, 60, 2, pt, padding-top);
+.callee(0, 60, 2, pr, padding-right);
+.callee(0, 60, 2, pb, padding-bottom);
+.callee(0, 60, 2, pl, padding-left);
+
+// 设置文字大小
+.callee(20, 60, 2, fz, font-size);
+
+// float
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+
+// overflow相关
+.oh {
+  overflow: hidden;
+}
+.ov {
+  overflow: visible;
+}
+
+// position相关
+.pos_r {
+  position: relative;
+}
+.pos_a {
+  position: absolute;
+}
+.pos_f {
+  position: fixed;
+}
+.pos_bottom {
+  position: fixed;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+// 页面公用
+#app {
+  height: 100% !important;
+  overflow: auto;
+}
+
+body {
+  background: @background-color;
+}
+
+.page-container {
+  max-width: 1000px;
+  min-height: 512px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.body {
+  width: 100%;
+  min-height: 512px;
+  padding: 15px;
+  background: #fff;
+  float: left;
+}
+
+.sidebar {
+  width: 300px;
+  padding: 15px;
+  background: #fff;
+  float: right;
+}

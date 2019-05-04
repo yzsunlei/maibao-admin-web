@@ -1,0 +1,42 @@
+@import "../../../asset/style/index";
+
+.body {
+  border: 1px solid @main-color;
+  border-radius: 4px;
+  
+  .head {
+    background: @background-color;
+    color: #000;
+    padding: 0 10px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+  }
+  
+  .list {
+    padding: 10px;
+    overflow: hidden;
+    
+    .li {
+      overflow: hidden;
+      line-height: 40px;
+    }
+  
+    .label {
+      float: left;
+      width: 70px;
+      text-align: right;
+    }
+  
+    .value {
+      float: left;
+      width: 300px;
+      padding-left: 20px;
+    }
+  
+    .button {
+      float: left;
+      margin-top: 5px;
+    }
+  }
+}
