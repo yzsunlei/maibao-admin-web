@@ -1,6 +1,6 @@
 # maibao-admin-web
 
-脉脉社交App应用的后台管理系统，使用Vue + ElementUI + echart等构建
+脉宝App应用的后台管理系统，使用Vue + ElementUI + echart等构建
 
 本项目纯属个人学习研究之作，仅供学习和参考。
 
