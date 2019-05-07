@@ -8,6 +8,7 @@ import userMock from "./system"
 Mock.mock("/api/admin/trend/index", trendMock.api_admin_trend_index);
 Mock.mock("/api/admin/trend/create", trendMock.api_admin_trend_create);
 Mock.mock("/api/admin/trend/category", trendMock.api_admin_trend_category);
+Mock.mock("/api/admin/trend/detail", trendMock.api_admin_trend_detail);
 Mock.mock("/api/admin/trend/comment", trendMock.api_admin_trend_comment);
 
 // infor

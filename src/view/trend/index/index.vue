@@ -2,31 +2,31 @@
   <div class="page-container">
     <div class="body create">
       <div class="head">
-        动态列表<router-link :to="{name: 'article_create'}" class="plus fr">+ 发布新文章</router-link>
+        动态中心<router-link :to="{name: 'trend_create'}" class="plus fr">+ 发布新动态</router-link>
       </div>
       <div class="list">
         <div class="batch-form">
           <el-form :inline="true" :model="input" class="pt10">
-            <el-form-item label="标题" prop="title">
-              <el-input v-model="input.keyword" placeholder="请输入标题"></el-input>
+            <el-form-item label="关键词" prop="title">
+              <el-input v-model="input.keyword" placeholder="请输入关键词"></el-input>
             </el-form-item>
-            <el-form-item label="分类" prop="category">
-              <el-select v-model="input.cid" placeholder="全部分类">
+            <el-form-item label="分类" prop="type">
+              <el-select v-model="input.type" placeholder="全部分类">
                 <el-option
-                  v-for="item in categories"
+                  v-for="item in types"
                   :key="item.id"
                   :label="item.name"
                   :value="item.id">
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="状态" prop="count">
-              <el-select v-model="input.is_publish" placeholder="全部状态">
+            <el-form-item label="用户" prop="user_id">
+              <el-select v-model="input.uid" placeholder="全部用户">
                 <el-option
-                  v-for="item in status"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="item in users"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -38,17 +38,16 @@
         <div class="table-wrapper">
           <el-table :data="list" stripe style="width: 100%">
             <el-table-column prop="id" label="序号" width="80"></el-table-column>
-            <el-table-column label="标题" width="300">
-              <template scope="scope">
-                <a title="前台预览" :href="'/article/view/'+scope.row.id" target="_blank">{{scope.row.title}}</a>
-              </template>
-            </el-table-column>
-            <el-table-column prop="category.name" label="分类" width="120"></el-table-column>
+            <el-table-column prop="type.name" label="分类" width="120"></el-table-column>
+            <el-table-column prop="user.username" label="用户" width="120"></el-table-column>
+            <el-table-column prop="content" label="内容" width="380"></el-table-column>
+            <el-table-column prop="praise_num" label="点赞次数" width="100"></el-table-column>
+            <el-table-column prop="share_num" label="分享次数" width="100"></el-table-column>
+            <el-table-column prop="comment_num" label="评论次数" width="100"></el-table-column>
             <el-table-column prop="created_at" label="发布时间" width="180"></el-table-column>
-            <el-table-column prop="author" label="发布人" width="100"></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column prop="deleted_at" label="显示状态" width="100"></el-table-column>
+            <el-table-column label="操作" width="120">
               <template scope="scope">
-                <el-button type="text" size="small" @click="handlePublish(scope.row)" v-if="!scope.row.is_publish">发布</el-button>
                 <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                 <el-button type="text" size="small" @click="handleDelete(scope.row)">删除</el-button>
               </template>
@@ -76,54 +75,43 @@
 	  mapActions
   } from 'vuex';
   import {
-  	AdminTrendCategoryModel,
     AdminTrendIndexModel,
     AdminTrendPublishModel,
+    AdminTrendCategoryModel,
+    AdminTrendDetailModel,
     AdminTrendDeleteModel
   } from '../../../common/rest';
 
   export default {
     data() {
       return {
-      	categories: [],
+      	types: [
+          { id: 1, name: '好友动态' },
+          { id: 2, name: '关注话题' },
+          { id: 3, name: '职言分享' },
+        ],
+        users: [],
         status: [
-          { value: 0, label: '未发布' },
-          { value: 1, label: '已发布' }
+          { value: 0, label: '删除' },
+          { value: 1, label: '显示' }
         ],
         input: {
         	page: 1,
           size: 10,
-	        cid: undefined,
-	        keyword: '',
-          is_publish: undefined
+          keyword: '',
+          type: undefined,
+          uid: undefined,
+          is_deleted: undefined
         },
         list: [],
         count: undefined
       }
     },
     created() {
-    	// 获取分类列表
-      this.loadCates();
-
-      // 获取文章列表
-      this.loadArticle();
+      this.loadTrend();
     },
     methods: {
-    	loadCates() {
-		    AdminTrendCategoryModel.getInstance().execute().then(data => {
-		    	this.categories = data.list;
-          this.categories.forEach(i => {
-            if (i.level) {
-              let plus = '|';
-              for (var j=0; j<i.level; j++) {
-                plus =  plus + '---';
-              }
-              i.name = plus + i.name
-            }
-          });
-        });
-      },
-      loadArticle() {
+      loadTrend() {
         AdminTrendIndexModel.getInstance().execute(this.input).then(data => {
         	this.list = data.list;
         	this.count = data.count;
@@ -135,33 +123,20 @@
         }
 
 	    	this.input.page = page;
-	    	this.loadArticle();
-      },
-	    handlePublish(item) {
-        if (item.id) {
-	        let params = {
-		        id: item.id
-	        };
-        	AdminTrendPublishModel.getInstance().execute(params).then(data => {
-        		this.$message("发布成功");
-        		this.loadArticle();
-          });
-        }
+	    	this.loadTrend();
       },
 	    handleEdit(item) {
-    		this.$router.push({name: 'article_create', params: {id: item.id}});
+    		this.$router.push({name: 'trend_create', params: {id: item.id}});
       },
 	    handleDelete(item) {
-    		if (item.id == 1) return this.$message({message: "该文章为固定单页，你不能删除", type: "error"});
-
 		    this.$confirm('确认要删除 "'+ item.title +'" ?', '温馨提示')
 			    .then(() => {
 		    	  let params = {
 		    	  	id: item.id
             };
-				    ArticleDeleteModel.getInstance().execute(params).then(data => {
+				    AdminTrendDeleteModel.getInstance().execute(params).then(data => {
 					    this.$message("删除成功");
-					    this.loadArticle();
+					    this.loaTrend();
 				    });
           });
       }

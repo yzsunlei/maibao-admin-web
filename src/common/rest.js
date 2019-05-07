@@ -8,7 +8,7 @@ function buildFetchModel(config) {
 /* 动态模块 */
 export const AdminTrendIndexModel = buildFetchModel({
   url: 'admin/trend/index',
-  defaultMethod: 'GET'
+  defaultMethod: 'POST'
 });
 
 export const AdminTrendCreateModel = buildFetchModel({
@@ -18,30 +18,35 @@ export const AdminTrendCreateModel = buildFetchModel({
 
 export const AdminTrendCategoryModel = buildFetchModel({
   url: 'admin/trend/category',
-  defaultMethod: 'GET'
+  defaultMethod: 'POST'
+});
+
+export const AdminTrendDetailModel = buildFetchModel({
+  url: 'admin/trend/detail',
+  defaultMethod: 'POST'
 });
 
 export const AdminTrendCommentModel = buildFetchModel({
   url: 'admin/trend/comment',
-  defaultMethod: 'GET'
+  defaultMethod: 'POST'
 });
 
 /* 消息模块 */
 export const AdminInforIndexModel = buildFetchModel({
   url: 'admin/infor/index',
-  defaultMethod: 'GET'
+  defaultMethod: 'POST'
 });
 
 /* 人脉模块 */
 export const AdminSocialIndexModel = buildFetchModel({
   url: 'admin/social/index',
-  defaultMethod: 'GET'
+  defaultMethod: 'POST'
 });
 
 /* 系统模块 */
 export const AdminSystemConfigModel = buildFetchModel({
-  url: 'admin/config/get',
-  defaultMethod: 'GET'
+  url: 'admin/config/POST',
+  defaultMethod: 'POST'
 });
 
 export const AdminSystemLoginModel = buildFetchModel({
@@ -51,7 +56,7 @@ export const AdminSystemLoginModel = buildFetchModel({
 
 export const AdminSystemInfoModel = buildFetchModel({
   url: 'admin/system/info',
-  defaultMethod: 'GET'
+  defaultMethod: 'POST'
 });
 
 export const AdminSystemLogoutModel = buildFetchModel({

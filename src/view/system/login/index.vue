@@ -57,7 +57,7 @@
 	          	    this.$message("登录成功，将自动跳转..");
 	          	    setTimeout(() => {
 			              this.$store.dispatch('loadUserInfo');
-			              this.$router.replace('/');
+			              this.$router.replace('/system/info');
                   }, 2000);
               }).catch(err => {
                 this.$message({

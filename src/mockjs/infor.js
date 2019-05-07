@@ -5,24 +5,21 @@ export default {
     "list": [
       {
         "id": 1,
-        "title": "待处理请求",
-        "desc": "发现更多优质人脉",
-        "pic": "/static/img/avatar.3727a9e.png",
-        "time": "04-30"
-      },
-      {
-        "id": 2,
-        "title": "问答小助手",
-        "desc": "你听过哪些“职场黑话”？",
-        "pic": "/static/img/avatar3.ebcb3a9.png",
-        "time": "04-28"
-      },
-      {
-        "id": 3,
+        "type": {
+          "id": 1,
+          "name": "好友聊天"
+        },
+        "user": {
+          "username": "channel",
+          "nickname": "无双",
+          "avatar": "/static/img/avatar.3727a9e.png",
+          "company": "阿里巴巴",
+          "position": "技术专家"
+        },
         "title": "何苗-蚂蚁金服技术专家",
         "desc": "消息队列你用过吗？",
         "pic": "/static/img/avatar.3727a9e.png",
-        "time": "04-26"
+        "created_at": "2019-05-06 22:10"
       },
     ]
   }),
